@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projekta darbs ķīmijā — Magnijs un vitamīni</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 13px 28px;
+      background: rgba(15, 23, 42, 0.90);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 13px;
+      font-size: 14px;
+    }
+    nav a:hover { color: #38bdf8; }
+    section {
+      min-height: 100vh;
+      padding: 105px 10% 70px;
+      display: flex;
+      align-items: center;
+      gap: 46px;
+    }
+    .dark { background: #020617; }
+    .light { background: #111827; }
+    .blue { background: linear-gradient(135deg, #0f172a, #082f49); }
+    .content { max-width: 790px; }
+    .card {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: 0 20px 65px rgba(0,0,0,0.28);
+    }
+    .pill {
+      display: inline-block;
+      padding: 9px 15px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.16);
+      color: #7dd3fc;
+      margin-bottom: 18px;
+      font-weight: bold;
+      letter-spacing: .3px;
+    }
+    h1 {
+      font-size: 56px;
+      line-height: 1.05;
+      margin: 0 0 22px;
+    }
+    h2 {
+      font-size: 40px;
+      margin: 0 0 20px;
+      color: #7dd3fc;
+    }
+    h3 {
+      font-size: 24px;
+      margin: 18px 0 8px;
+      color: #facc15;
+    }
+    p, li {
+      font-size: 21px;
+      line-height: 1.55;
+      color: #e2e8f0;
+    }
+    ul { padding-left: 24px; }
+    .small { font-size: 17px; color: #cbd5e1; }
+    .hero-box {
+      min-width: 310px;
+      width: 370px;
+      height: 370px;
+      border-radius: 36px;
+      background: radial-gradient(circle at 28% 25%, #38bdf8, transparent 36%),
+                  radial-gradient(circle at 72% 70%, #a78bfa, transparent 39%),
+                  #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+    }
+    .hero-box .symbol {
+      font-size: 105px;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+    }
+    .hero-box .number {
+      font-size: 22px;
+      color: #e2e8f0;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 18px;
+      overflow: hidden;
+      border-radius: 18px;
+    }
+    th, td {
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      text-align: left;
+      color: #e2e8f0;
+    }
+    th { background: rgba(56,189,248,0.18); color: white; }
+    .formula {
+      font-size: 28px;
+      background: rgba(250,204,21,0.12);
+      border: 1px solid rgba(250,204,21,0.25);
+      padding: 18px;
+      border-radius: 18px;
+      color: #fde68a;
+      margin: 18px 0;
+      display: inline-block;
+    }
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .mini {
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    img.slide-img {
+      width: 360px;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 20px 55px rgba(0,0,0,0.35);
+      background: #1e293b;
+    }
+    .caption {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .image-wrap { max-width: 380px; }
+    .chart {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 185px 1fr 55px;
+      gap: 12px;
+      align-items: center;
+      font-size: 17px;
+      color: #e2e8f0;
+    }
+    .bar-bg {
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa);
+    }
+    .source-list a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+    .source-list a:hover { text-decoration: underline; }
+    .note {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(250,204,21,0.10);
+      border: 1px solid rgba(250,204,21,0.20);
+      color: #fde68a;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    footer {
+      padding: 35px;
+      text-align: center;
+      color: #94a3b8;
+      background: #020617;
+    }
+    @media (max-width: 950px) {
+      nav { flex-direction: column; gap: 10px; padding: 12px; }
+      nav a { margin-left: 8px; font-size: 12px; }
+      section { flex-direction: column; padding: 125px 7% 60px; }
+      h1 { font-size: 39px; }
+      h2 { font-size: 31px; }
+      p, li { font-size: 18px; }
+      .hero-box { width: 280px; height: 280px; min-width: 280px; }
+      .hero-box .symbol { font-size: 82px; }
+      .two { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; gap: 6px; }
+      img.slide-img { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <strong>Projekta darbs ķīmijā</strong>
+  <div>
+    <a href="#s1">Sākums</a>
+    <a href="#s3">Magnijs</a>
+    <a href="#s7">Vitamīni</a>
+    <a href="#s12">Statistika</a>
+    <a href="#s14">Avoti</a>
+  </div>
+</nav>
+
+<section id="s1" class="blue">
+  <div class="content">
+    <span class="pill">12.D klase • Ķīmija • Projekta darbs</span>
+    <h1>Magnijs un vitamīni cilvēka organismā</h1>
+    <p><b>Darba autors:</b> Leonīds Burlaka</p>
+    <p><b>Tēma:</b> Magnija un vitamīnu nozīme ķīmijā, bioloģijā un ikdienas dzīvē</p>
+    <p class="small">Šis darbs ir izveidots kā mājaslapa-prezentācija, kuru var ritināt no augšas uz leju.</p>
+  </div>
+  <div class="hero-box">
+    <div class="symbol">Mg</div>
+    <div class="number">atomskaitlis 12</div>
+  </div>
+</section>
+
+<section id="s2" class="dark">
+  <div class="content card">
+    <span class="pill">1. slaids</span>
+    <h2>Darba mērķis</h2>
+    <p>Darba mērķis ir noskaidrot, kas ir magnijs un vitamīni, kāda ir to uzbūve un kāpēc tie ir svarīgi cilvēka organismam.</p>
+    <p>Šajā darbā tiek apskatīta arī magnija izmantošana ķīmijā, medicīnā, uzturā un rūpniecībā.</p>
+  </div>
+</section>
+
+<section id="s3" class="light">
+  <div class="content card">
+    <span class="pill">2. slaids</span>
+    <h2>Kas ir magnijs?</h2>
+    <p>Magnijs ir ķīmiskais elements ar simbolu <b>Mg</b> un atomskaitli <b>12</b>. Tas pieder pie sārmzemju metāliem un ir viens no vieglākajiem strukturālajiem metāliem.</p>
+    <ul>
+      <li>Magnijam atomā ir 12 protoni.</li>
+      <li>Neitrālā atomā ir 12 elektroni.</li>
+      <li>Ārējā elektronu līmenī magnijam ir 2 elektroni.</li>
+    </ul>
+  </div>
+  <div class="image-wrap">
+    <img class="slide-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Mg%2C12.jpg" alt="Magnija paraugs">
+    <div class="caption">Magnija paraugs. Attēls: Wikimedia Commons</div>
+  </div>
+</section>
+
+<section id="s4" class="dark">
+  <div class="content card">
+    <span class="pill">3. slaids</span>
+    <h2>Magnija jons</h2>
+    <p>Ķīmiskajās reakcijās magnijs parasti atdod divus ārējā līmeņa elektronus. Tāpēc veidojas pozitīvs jons:</p>
+    <div class="formula">Mg → Mg²⁺ + 2e⁻</div>
+    <p>Tas nozīmē, ka magnija jonam ir lādiņš <b>+2</b>. Šāds jons bieži sastopams sāļos un cilvēka organismā.</p>
+  </div>
+</section>
+
+<section id="s5" class="light">
+  <div class="content card">
+    <span class="pill">4. slaids</span>
+    <h2>Magnija īpašības</h2>
+    <div class="two">
+      <div class="mini">
+        <h3>Fizikālās īpašības</h3>
+        <p>Magnijs ir viegls, sudrabaini balts metāls. Tas ir salīdzinoši mīksts un labi vada siltumu.</p>
+      </div>
+      <div class="mini">
+        <h3>Ķīmiskās īpašības</h3>
+        <p>Magnijs reaģē ar skābekli un deg ar spilgti baltu liesmu, veidojot magnija oksīdu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s6" class="dark">
+  <div class="content card">
+    <span class="pill">5. slaids</span>
+    <h2>Magnija degšana</h2>
+    <p>Viena no pazīstamākajām magnija reakcijām ir degšana skābeklī. Reakcijā rodas magnija oksīds:</p>
+    <div class="formula">2Mg + O₂ → 2MgO</div>
+    <p>Degšanas laikā rodas ļoti spilgta balta gaisma. Šo reakciju bieži izmanto kā piemēru metālu oksidēšanās procesam.</p>
+  </div>
+  <div class="image-wrap">
+    <img class="slide-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Magnesium_ribbon_burning.jpg" alt="Degoša magnija lente">
+    <div class="caption">Degoša magnija lente. Attēls: Wikimedia Commons</div>
+  </div>
+</section>
+
+<section id="s7" class="light">
+  <div class="content card">
+    <span class="pill">6. slaids</span>
+    <h2>Magnijs cilvēka organismā</h2>
+    <p>Magnijs ir svarīgs minerālelements. Tas palīdz muskuļu darbībai, nervu sistēmai un sirds ritma regulēšanai.</p>
+    <p>Pieauguša cilvēka organismā ir apmēram 25 g magnija. Liela daļa atrodas kaulos, bet pārējais — mīkstajos audos un šūnās.</p>
+  </div>
+</section>
+
+<section id="s8" class="dark">
+  <div class="content card">
+    <span class="pill">7. slaids</span>
+    <h2>Kas ir vitamīni?</h2>
+    <p>Vitamīni ir organiskas vielas, kas organismam ir vajadzīgas nelielā daudzumā. Tie palīdz vielmaiņai, imunitātei, šūnu augšanai un nervu sistēmas darbībai.</p>
+    <p>Vitamīni paši par sevi nav galvenais enerģijas avots, bet tie palīdz organismam izmantot barības vielas.</p>
+  </div>
+</section>
+
+<section id="s9" class="light">
+  <div class="content card">
+    <span class="pill">8. slaids</span>
+    <h2>Vitamīnu veidi</h2>
+    <table>
+      <tr>
+        <th>Vitamīnu grupa</th>
+        <th>Piemēri</th>
+        <th>Nozīme</th>
+      </tr>
+      <tr>
+        <td>Taukos šķīstošie</td>
+        <td>A, D, E, K</td>
+        <td>Saistīti ar redzi, kauliem, šūnu aizsardzību un asins recēšanu.</td>
+      </tr>
+      <tr>
+        <td>Ūdenī šķīstošie</td>
+        <td>C un B grupas vitamīni</td>
+        <td>Palīdz imunitātei, nervu sistēmai un vielmaiņai.</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<section id="s10" class="dark">
+  <div class="content card">
+    <span class="pill">9. slaids</span>
+    <h2>Magnija un vitamīnu saistība</h2>
+    <p>Magnijs un vitamīni organismā bieži darbojas kopā. Magnijs ir svarīgs daudzu enzīmu darbībai, bet vitamīni palīdz vielmaiņas procesos.</p>
+    <p>Īpaši nozīmīga ir magnija saistība ar B grupas vitamīniem un D vitamīnu, jo tie ietekmē nervu sistēmu, enerģijas apmaiņu un kaulu veselību.</p>
+  </div>
+</section>
+
+<section id="s11" class="light">
+  <div class="content card">
+    <span class="pill">10. slaids</span>
+    <h2>Magnijs pārtikā</h2>
+    <p>Magniju var uzņemt ar dažādiem pārtikas produktiem. Tas ir atrodams riekstos, sēklās, pākšaugos, pilngraudos un zaļajos lapu dārzeņos.</p>
+    <table>
+      <tr>
+        <th>Produktu grupa</th>
+        <th>Piemēri</th>
+      </tr>
+      <tr>
+        <td>Sēklas un rieksti</td>
+        <td>Ķirbju sēklas, mandeles, Indijas rieksti</td>
+      </tr>
+      <tr>
+        <td>Graudaugi</td>
+        <td>Auzas, griķi, pilngraudu produkti</td>
+      </tr>
+      <tr>
+        <td>Dārzeņi</td>
+        <td>Spināti un citi zaļie lapu dārzeņi</td>
+      </tr>
+    </table>
+  </div>
+  <div class="image-wrap">
+    <img class="slide-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/FoodSourcesOfMagnesium.jpg" alt="Magnija avoti pārtikā">
+    <div class="caption">Magnija avoti pārtikā. Attēls: Wikimedia Commons</div>
+  </div>
+</section>
+
+<section id="s12" class="dark">
+  <div class="content card">
+    <span class="pill">11. slaids</span>
+    <h2>Statistika par magniju pārtikā</h2>
+    <p>Zemāk redzama diagramma ar pārtikas grupām, kurās pēc pētījuma datiem biežāk sastopami produkti ar piemērotu magnija daudzumu.</p>
+    <div class="chart">
+      <div class="bar-row">
+        <div>Pākšaugi</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:64.84%"></div></div>
+        <div>64.84%</div>
+      </div>
+      <div class="bar-row">
+        <div>Rieksti un sēklas</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:54.41%"></div></div>
+        <div>54.41%</div>
+      </div>
+      <div class="bar-row">
+        <div>Bērnu pārtika</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:53.70%"></div></div>
+        <div>53.70%</div>
+      </div>
+      <div class="bar-row">
+        <div>Brokastu pārslas</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:35.34%"></div></div>
+        <div>35.34%</div>
+      </div>
+      <div class="bar-row">
+        <div>Graudaugi un pasta</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:32.04%"></div></div>
+        <div>32.04%</div>
+      </div>
+    </div>
+    <div class="note">Datu avots: Wikimedia Commons publicēts materiāls par pārtikas grupām un magnija līmeni.</div>
+  </div>
+</section>
+
+<section id="s13" class="light">
+  <div class="content card">
+    <span class="pill">12. slaids</span>
+    <h2>Magnija trūkums</h2>
+    <p>Ja organismā trūkst magnija, cilvēkam var būt nogurums, muskuļu krampji, nervozitāte vai vājums.</p>
+    <p>Tomēr par veselības problēmām vienmēr ir jākonsultējas ar ārstu, jo līdzīgi simptomi var būt arī citu iemeslu dēļ.</p>
+  </div>
+</section>
+
+<section id="s14" class="blue">
+  <div class="content card">
+    <span class="pill">13. slaids</span>
+    <h2>Secinājumi</h2>
+    <ul>
+      <li>Magnijs ir ķīmiskais elements ar simbolu Mg un savienojumos bieži veido jonu Mg²⁺.</li>
+      <li>Magnijs ir svarīgs cilvēka muskuļu, nervu sistēmas un sirds darbībai.</li>
+      <li>Vitamīni ir organiskas vielas, kas palīdz organismam normāli funkcionēt.</li>
+      <li>Magniju var uzņemt ar pārtiku, īpaši ar riekstiem, sēklām, pākšaugiem un zaļajiem dārzeņiem.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s15" class="dark">
+  <div class="content card">
+    <span class="pill">14. slaids</span>
+    <h2>Izmantotie avoti</h2>
+    <ol class="source-list">
+      <li><a href="https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/" target="_blank">NIH Office of Dietary Supplements — Magnesium Fact Sheet</a></li>
+      <li><a href="https://medlineplus.gov/ency/article/002423.htm" target="_blank">MedlinePlus — Magnesium in diet</a></li>
+      <li><a href="https://nutritionsource.hsph.harvard.edu/magnesium/" target="_blank">Harvard T.H. Chan School of Public Health — Magnesium</a></li>
+      <li><a href="https://www.britannica.com/science/magnesium" target="_blank">Encyclopaedia Britannica — Magnesium</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:Averages_(%25)_of_foods_containing_appropriate_magnesium_levels_(to_achieve_adequate_magnesium_intake)_based_on_the_proposed_method_in_food_groups.jpg" target="_blank">Wikimedia Commons — statistikas diagrammas dati par magniju pārtikā</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:Magnesium_ribbon_burning.jpg" target="_blank">Wikimedia Commons — Magnesium ribbon burning</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:FoodSourcesOfMagnesium.jpg" target="_blank">Wikimedia Commons — Food sources of magnesium</a></li>
+    </ol>
+  </div>
+</section>
+
+<section id="s16" class="blue">
+  <div class="content card">
+    <span class="pill">Noslēgums</span>
+    <h2>Paldies par uzmanību!</h2>
+    <p>Šī projekta darba galvenā doma: magnijs un vitamīni ir mazas, bet ļoti svarīgas vielas, bez kurām organisms nevar pilnvērtīgi darboties.</p>
+  </div>
+</section>
+
+<footer>
+  Projekta darbs ķīmijā • 12.D klase • Leonīds Burlaka
+</footer>
+
+</body>
+</html>
